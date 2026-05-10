@@ -1,0 +1,341 @@
+@import "tailwindcss";
+
+/* ===== DESIGN SYSTEM TOKENS ===== */
+@theme inline {
+  --color-background: #000000;
+  --color-foreground: #ffffff;
+  --color-surface: #0a0a0f;
+  --color-surface-light: #12121a;
+  --color-surface-hover: #1a1a28;
+  --color-border: #1e1e2e;
+  --color-border-light: #2a2a3a;
+  --color-muted: #888899;
+  --color-muted-dark: #555566;
+  --color-accent-blue: #0066FF;
+  --color-accent-blue-light: #00AAFF;
+  --color-accent-cyan: #00E5FF;
+  --color-accent-purple: #8B5CF6;
+  --color-accent-purple-light: #A855F7;
+  --color-accent-pink: #EC4899;
+  --color-accent-orange: #F59E0B;
+
+  --font-heading: 'Outfit', sans-serif;
+  --font-body: 'Inter', sans-serif;
+}
+
+/* ===== BASE ===== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* CRITICAL: Prevent ALL horizontal overflow/swipe on mobile */
+html {
+  scroll-behavior: smooth;
+  background: #000;
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+body {
+  background: #000;
+  color: #fff;
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  max-width: 100vw;
+  position: relative;
+}
+
+::selection { background: rgba(0, 102, 255, 0.3); color: #fff; }
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: #000; }
+::-webkit-scrollbar-thumb { background: #222; border-radius: 2px; }
+
+/* ===== GRADIENTS ===== */
+.gradient-text {
+  background: linear-gradient(135deg, #0066FF, #8B5CF6, #00E5FF);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text-warm {
+  background: linear-gradient(135deg, #F59E0B, #EC4899, #8B5CF6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ===== GLASS ===== */
+.glass {
+  background: rgba(10, 10, 20, 0.5);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 20px;
+}
+
+/* ===== GLOW ===== */
+.glow-blue { box-shadow: 0 0 30px rgba(0, 102, 255, 0.12), 0 0 80px rgba(0, 102, 255, 0.04); }
+.glow-purple { box-shadow: 0 0 30px rgba(139, 92, 246, 0.12), 0 0 80px rgba(139, 92, 246, 0.04); }
+.glow-cyan { box-shadow: 0 0 30px rgba(0, 229, 255, 0.12), 0 0 80px rgba(0, 229, 255, 0.04); }
+
+/* ===== ANIMATIONS ===== */
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(3deg); }
+}
+@keyframes float-reverse {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(15px) rotate(-3deg); }
+}
+@keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes pulse-soft { 0%, 100% { opacity: 0.4; } 50% { opacity: 0.8; } }
+@keyframes scale-in { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+@keyframes slide-up { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+@keyframes slide-right { from { transform: translateX(-30px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+@keyframes rotate-3d { 0% { transform: perspective(600px) rotateY(0deg); } 100% { transform: perspective(600px) rotateY(360deg); } }
+
+.animate-float { animation: float 6s ease-in-out infinite; }
+.animate-float-reverse { animation: float-reverse 7s ease-in-out infinite; }
+.animate-spin-slow { animation: spin-slow 25s linear infinite; }
+.animate-pulse-soft { animation: pulse-soft 3s ease-in-out infinite; }
+
+/* ===== 3D CARD ===== */
+.card-3d {
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+.card-3d:hover {
+  transform: perspective(1000px) rotateY(-4deg) rotateX(3deg) translateZ(10px);
+  box-shadow: 0 20px 60px rgba(0, 102, 255, 0.08), 0 0 40px rgba(139, 92, 246, 0.06);
+}
+
+/* ===== GRADIENT CARD ===== */
+.gradient-card {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  background: linear-gradient(135deg, rgba(10,10,20,0.8), rgba(20,20,40,0.6));
+  border: 1px solid rgba(255,255,255,0.04);
+  transition: all 0.5s ease;
+}
+.gradient-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(0,102,255,0.05), rgba(139,92,246,0.05), rgba(0,229,255,0.03));
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+.gradient-card:hover::before { opacity: 1; }
+.gradient-card:hover { border-color: rgba(255,255,255,0.08); }
+
+/* ===== SCROLL PROGRESS ===== */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #0066FF, #8B5CF6, #00E5FF);
+  z-index: 9999;
+  transform-origin: left;
+}
+
+/* ===== IMAGE PLACEHOLDER ===== */
+.image-placeholder {
+  background: linear-gradient(135deg, #0a0a12, #12121f);
+  border: 1px dashed rgba(255,255,255,0.08);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #444;
+  font-size: 13px;
+  overflow: hidden;
+  position: relative;
+}
+
+/* ===== WHATSAPP ===== */
+@keyframes whatsapp-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4); }
+  70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+}
+.whatsapp-pulse { animation: whatsapp-pulse 2s infinite; }
+
+
+
+/* ===== GLOBAL LAYOUT CLEANUP (USER REQUESTED FIXES) ===== */
+
+/* STEP 1: Every section block across the whole site */
+section {
+  padding-top: 40px !important;
+  padding-bottom: 40px !important;
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+/* STEP 2: "Our Process" Section Specific Fix */
+.process-section {
+  margin-top: 60px !important;
+  padding-top: 30px !important;
+}
+
+/* STEP 3: CTA Section Specific Fix */
+.cta-section {
+  padding-bottom: 60px !important;
+}
+.cta-buttons-row {
+  margin-bottom: 40px !important;
+}
+
+/* STEP 4: Internal Spacing Inside Every Section */
+.section-label {
+  margin-bottom: 6px !important;
+  display: block;
+}
+.section-heading {
+  margin-bottom: 10px !important;
+}
+.section-subtext {
+  margin-bottom: 20px !important;
+}
+.section-content-grid {
+  margin-top: 20px !important;
+}
+
+/* STEP 5: Process Steps Row */
+.process-steps-row {
+  margin-top: 30px !important;
+  gap: 20px !important;
+}
+
+/* STEP 6: Testimonials Section */
+.testimonials-section {
+  padding-top: 40px !important;
+}
+.testimonial-quote {
+  margin-bottom: 6px !important;
+}
+.testimonial-name {
+  margin-bottom: 6px !important;
+}
+.testimonial-title {
+  margin-bottom: 6px !important;
+}
+
+/* ===== TESTIMONIAL MARQUEE ===== */
+@keyframes marquee-left {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.animate-marquee-left {
+  animation: marquee-left 40s linear infinite;
+  display: flex;
+  width: max-content;
+}
+
+/* ===== RESPONSIVE - HOME PAGE ONLY ===== */
+
+/* ── MOBILE (≤ 640px) ── */
+@media (max-width: 640px) {
+  /* --- Hero --- */
+  .hero-heading { font-size: 2rem !important; line-height: 1.1 !important; }
+
+  /* --- All sections: tighter vertical padding on mobile --- */
+  section {
+    padding-top: 30px !important;
+    padding-bottom: 30px !important;
+  }
+
+  /* Process section override */
+  .process-section {
+    margin-top: 20px !important;
+    padding-top: 20px !important;
+  }
+
+  /* CTA section */
+  .cta-section {
+    padding-bottom: 40px !important;
+  }
+  .cta-buttons-row {
+    flex-direction: column !important;
+    align-items: center !important;
+    margin-bottom: 20px !important;
+  }
+  .cta-buttons-row a {
+    width: 100% !important;
+    max-width: 280px !important;
+    text-align: center !important;
+  }
+
+  /* Section spacing tweaks */
+  .section-content-grid {
+    margin-top: 16px !important;
+  }
+  .section-subtext {
+    margin-bottom: 14px !important;
+  }
+
+  /* Process steps: 3 per row wrapping nicely */
+  .process-steps-row {
+    margin-top: 16px !important;
+    gap: 16px !important;
+  }
+  .process-steps-row > * {
+    flex: 0 1 calc(33.333% - 12px) !important;
+    min-width: 72px !important;
+  }
+
+  /* Testimonials marquee card width */
+  .animate-marquee-left > div {
+    width: 240px !important;
+  }
+
+  /* BrandSolarSystem: shorter canvas on mobile */
+  .brand-solar-container {
+    height: 380px !important;
+  }
+
+  /* Stat bar inside solar system */
+  .brand-solar-container .stat-bar {
+    gap: 12px !important;
+    bottom: 8px !important;
+  }
+}
+
+/* ── TABLET (641px – 768px) ── */
+@media (min-width: 641px) and (max-width: 768px) {
+  .hero-heading { font-size: 2.5rem !important; line-height: 1.1 !important; }
+
+  section {
+    padding-top: 44px !important;
+    padding-bottom: 44px !important;
+  }
+
+  .brand-solar-container {
+    height: 480px !important;
+  }
+
+  .process-steps-row {
+    gap: 18px !important;
+  }
+}
+
+/* ── LAPTOP / MEDIUM SCREENS (769px – 1024px) ── */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .hero-heading { font-size: 3.5rem !important; line-height: 1.05 !important; }
+
+  section {
+    padding-top: 50px !important;
+    padding-bottom: 50px !important;
+  }
+
+  .brand-solar-container {
+    height: 600px !important;
+  }
+}
